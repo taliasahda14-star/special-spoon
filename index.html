@@ -33,7 +33,7 @@
             padding: 15px;
         }
 
-        /* HEADER & LOGO SSAAHAYY */
+        /* HEADER & LOGO UTAMA DI ATAS */
         header {
             width: 100%;
             max-width: 800px;
@@ -54,27 +54,13 @@
             gap: 12px;
         }
 
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--electric-blue), var(--lilac-purple));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 20px;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .logo-text {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            background: linear-gradient(90deg, #60a5fa, #e9d5ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* LOGO GAMBAR UTAMA */
+        .main-logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            object-fit: contain;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
 
         .header-buttons {
@@ -278,6 +264,48 @@
             background: var(--lilac-purple);
         }
 
+        /* SECTION 4 LOGO DI BAGIAN BAWAH (FOOTER) */
+        .bottom-logos-container {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--panel-bg);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .logo-item img {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--electric-blue);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .logo-item span {
+            font-size: 11px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
         /* MODAL POPUP */
         .modal {
             display: none;
@@ -328,11 +356,11 @@
 </head>
 <body>
 
-    <!-- HEADER / BRANDING -->
+    <!-- HEADER / LOGO UTAMA DI ATAS -->
     <header>
         <div class="logo-container">
-            <div class="logo-icon">SH</div>
-            <div class="logo-text">SSAAHAYY</div>
+            <!-- URL Gambar Logo SSAAHAYY 3D -->
+            <img class="main-logo-img" src="http://googleusercontent.com/image_generation_content/412" alt="Logo SSAAHAYY 3D">
         </div>
         <div class="header-buttons">
             <button class="btn-icon" onclick="toggleAudio()">🔊 Musik</button>
@@ -397,6 +425,26 @@
             <span style="font-size: 12px; font-weight: bold; color: #94a3b8;">NAVIGASI JOYSTICK</span>
             <button class="dpad-btn" onclick="navigateChoice(1)">▶</button>
             <button class="dpad-btn" style="background: #22c55e; margin-left: 10px;" onclick="confirmChoice()">OK</button>
+        </div>
+    </div>
+
+    <!-- 4 LOGO IMAGES DI BAGIAN BAWAH -->
+    <div class="bottom-logos-container">
+        <div class="logo-item">
+            <img src="badge1.png" alt="Speed Logo">
+            <span>KECEPATAN</span>
+        </div>
+        <div class="logo-item">
+            <img src="badge2.png" alt="Trophy Logo">
+            <span>PRESTASI</span>
+        </div>
+        <div class="logo-item">
+            <img src="badge3.png" alt="Power Logo">
+            <span>KREATIF</span>
+        </div>
+        <div class="logo-item">
+            <img src="badge4.png" alt="Shield Logo">
+            <span>PERTAHANAN</span>
         </div>
     </div>
 
