@@ -1,1 +1,590 @@
-test
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSAAHAYY - Arena Batu Gunting Kertas</title>
+    <style>
+        :root {
+            --primary-blue: #1d4ed8;
+            --electric-blue: #3b82f6;
+            --lilac-purple: #c084fc;
+            --bg-dark: #0b0f19;
+            --panel-bg: rgba(20, 27, 45, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1e1b4b 0%, #090d16 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: hidden;
+            padding: 15px;
+        }
+
+        /* HEADER & LOGO SSAAHAYY */
+        header {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: var(--panel-bg);
+            border: 2px solid var(--lilac-purple);
+            border-radius: 16px;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--lilac-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #60a5fa, #e9d5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--lilac-purple);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-icon:hover {
+            background: var(--lilac-purple);
+            color: #000;
+            box-shadow: 0 0 10px var(--lilac-purple);
+        }
+
+        /* BOARD & STATS */
+        .game-board {
+            width: 100%;
+            max-width: 800px;
+            background: var(--panel-bg);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px;
+            border-radius: 10px;
+            border-bottom: 3px solid var(--electric-blue);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* TIMER BAR (RINTANGAN WAKTU) */
+        .timer-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--electric-blue), var(--lilac-purple));
+            transition: width 0.1s linear;
+        }
+
+        /* ARENA BATTLE (REALISTIS 3D EFFECT) */
+        .arena {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            min-height: 180px;
+            position: relative;
+        }
+
+        .fighter-card {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0,0,0,0.6) 100%);
+            border: 3px solid var(--electric-blue);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .fighter-card.cpu {
+            border-color: var(--lilac-purple);
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+        }
+
+        .vs-badge {
+            font-size: 28px;
+            font-weight: 900;
+            font-style: italic;
+            background: linear-gradient(45deg, #f43f5e, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .obstacle-banner {
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            border-radius: 8px;
+            color: #fca5a5;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* CONTROLLER & JOYSTICK INTERACTION */
+        .controls-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .choice-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-choice {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px solid var(--electric-blue);
+            border-radius: 16px;
+            padding: 15px 25px;
+            font-size: 32px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            flex: 1;
+            max-width: 120px;
+        }
+
+        .btn-choice span {
+            font-size: 12px;
+            color: #cbd5e1;
+            font-weight: bold;
+        }
+
+        .btn-choice:hover, .btn-choice.active {
+            transform: translateY(-5px) scale(1.05);
+            border-color: var(--lilac-purple);
+            box-shadow: 0 10px 25px rgba(192, 132, 252, 0.4);
+        }
+
+        /* VIRTUAL JOYSTICK */
+        .joystick-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dpad-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--electric-blue);
+            color: white;
+            border: none;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .dpad-btn:active {
+            background: var(--lilac-purple);
+        }
+
+        /* MODAL POPUP */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #1e1b4b;
+            border: 2px solid var(--lilac-purple);
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.5);
+        }
+
+        .modal-content h2 {
+            color: var(--lilac-purple);
+            margin-bottom: 15px;
+        }
+
+        .modal-content ul {
+            text-align: left;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .btn-close {
+            background: var(--electric-blue);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / BRANDING -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">SH</div>
+            <div class="logo-text">SSAAHAYY</div>
+        </div>
+        <div class="header-buttons">
+            <button class="btn-icon" onclick="toggleAudio()">🔊 Musik</button>
+            <button class="btn-icon" onclick="openModal()">❓ Bantuan</button>
+        </div>
+    </header>
+
+    <!-- DASHBOARD & GAMEPLAY -->
+    <div class="game-board">
+        <div class="dashboard">
+            <div class="stat-box">
+                <div class="stat-label">Level</div>
+                <div class="stat-value" id="level-val">1</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Skor Kamu</div>
+                <div class="stat-value" id="player-score">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Skor CPU</div>
+                <div class="stat-value" id="cpu-score">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Target</div>
+                <div class="stat-value" id="target-score">3</div>
+            </div>
+        </div>
+
+        <!-- TIMER RINTANGAN -->
+        <div class="timer-container">
+            <div class="timer-bar" id="timer-bar"></div>
+        </div>
+
+        <!-- ARENA PERTANDINGAN -->
+        <div class="arena">
+            <div class="fighter-card" id="player-card">✊</div>
+            <div class="vs-badge">VS</div>
+            <div class="fighter-card cpu" id="cpu-card">❓</div>
+        </div>
+
+        <h3 id="game-status" style="margin-top: 15px; color: #60a5fa;">Pilih Senjatamu!</h3>
+        <div class="obstacle-banner" id="obstacle-info">⚡ Level 1: Tanpa Rintangan Khusus</div>
+    </div>
+
+    <!-- CONTROLLER SECTION -->
+    <div class="controls-container">
+        <div class="choice-buttons">
+            <button class="btn-choice" id="btn-rock" onclick="playTurn('rock')">
+                ✊ <span>BATU</span>
+            </button>
+            <button class="btn-choice" id="btn-paper" onclick="playTurn('paper')">
+                ✋ <span>KERTAS</span>
+            </button>
+            <button class="btn-choice" id="btn-scissors" onclick="playTurn('scissors')">
+                ✌️ <span>GUNTING</span>
+            </button>
+        </div>
+
+        <!-- VIRTUAL JOYSTICK NAVIGASI -->
+        <div class="joystick-area">
+            <button class="dpad-btn" onclick="navigateChoice(-1)">◀</button>
+            <span style="font-size: 12px; font-weight: bold; color: #94a3b8;">NAVIGASI JOYSTICK</span>
+            <button class="dpad-btn" onclick="navigateChoice(1)">▶</button>
+            <button class="dpad-btn" style="background: #22c55e; margin-left: 10px;" onclick="confirmChoice()">OK</button>
+        </div>
+    </div>
+
+    <!-- MODAL CARA BERMAIN -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <h2>🎮 Cara Bermain</h2>
+            <ul>
+                <li><strong>Aturan Dasar:</strong> Batu mengalahkan Gunting, Gunting mengalahkan Kertas, Kertas mengalahkan Batu.</li>
+                <li><strong>Leveling System:</strong> Capai target skor untuk naik ke level berikutnya.</li>
+                <li><strong>Rintangan Level:</strong>
+                    <br>- Level 2+: Waktu bertindak lebih cepat.
+                    <br>- Level 3+: Perisai Acak CPU.
+                </li>
+                <li><strong>Kontrol:</strong> Klik langsung senjata atau gunakan Virtual Joystick di bawah.</li>
+            </ul>
+            <button class="btn-close" onclick="closeModal()">Paham & Mulai!</button>
+        </div>
+    </div>
+
+    <script>
+        // GAME STATE
+        let playerScore = 0;
+        let cpuScore = 0;
+        let currentLevel = 1;
+        let targetScore = 3;
+        let selectedIndex = 0;
+        const choices = ['rock', 'paper', 'scissors'];
+        const emojis = { rock: '✊', paper: '✋', scissors: '✌️' };
+
+        // TIMER & OBSTACLE STATE
+        let timerInterval;
+        let timeLeft = 100;
+        let isAudioOn = false;
+
+        // AUDIO SYNTHESIZER (Tanpa file eksternal)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playTone(freq, type = 'sine', duration = 0.15) {
+            if(!isAudioOn) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.value = freq;
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function toggleAudio() {
+            isAudioOn = !isAudioOn;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            alert(isAudioOn ? "Musik & Efek Suara Aktif!" : "Suara Dimatikan");
+        }
+
+        // TIMER SYSTEM
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 100;
+            const speed = Math.max(20, 100 - (currentLevel * 15)); // Makin tinggi level makin cepat
+            
+            timerInterval = setInterval(() => {
+                timeLeft -= 1;
+                document.getElementById('timer-bar').style.width = timeLeft + '%';
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    playTone(150, 'sawtooth', 0.4);
+                    document.getElementById('game-status').innerText = "⏰ Waktu Habis! Kamu dilewati.";
+                    setTimeout(resetRound, 1500);
+                }
+            }, speed);
+        }
+
+        // JOYSTICK CONTROLLER
+        function updateJoystickSelection() {
+            document.querySelectorAll('.btn-choice').forEach((btn, idx) => {
+                if(idx === selectedIndex) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function navigateChoice(dir) {
+            playTone(400, 'sine', 0.05);
+            selectedIndex = (selectedIndex + dir + choices.length) % choices.length;
+            updateJoystickSelection();
+        }
+
+        function confirmChoice() {
+            playTurn(choices[selectedIndex]);
+        }
+
+        // MAIN GAME LOGIC
+        function playTurn(playerChoice) {
+            clearInterval(timerInterval);
+            playTone(600, 'square', 0.1);
+
+            // Tampilkan animasi pilihan pemain
+            document.getElementById('player-card').innerText = emojis[playerChoice];
+
+            // AI Decision & Obstacle Modifiers
+            let cpuChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            // RINTANGAN LEVEL 3+: AI Pintar / Cheating
+            if (currentLevel >= 3 && Math.random() < 0.35) {
+                // CPU dapat membaca pilihan player 35% dari waktu
+                if (playerChoice === 'rock') cpuChoice = 'paper';
+                if (playerChoice === 'paper') cpuChoice = 'scissors';
+                if (playerChoice === 'scissors') cpuChoice = 'rock';
+            }
+
+            document.getElementById('cpu-card').innerText = emojis[cpuChoice];
+
+            // EVALUASI PEMENANG
+            if (playerChoice === cpuChoice) {
+                document.getElementById('game-status').innerText = "🤝 Seri!";
+                playTone(300, 'triangle', 0.2);
+            } else if (
+                (playerChoice === 'rock' && cpuChoice === 'scissors') ||
+                (playerChoice === 'paper' && cpuChoice === 'rock') ||
+                (playerChoice === 'scissors' && cpuChoice === 'paper')
+            ) {
+                playerScore++;
+                document.getElementById('player-score').innerText = playerScore;
+                document.getElementById('game-status').innerText = "🎉 Kamu Menang Ronde Ini!";
+                playTone(800, 'sine', 0.3);
+            } else {
+                cpuScore++;
+                document.getElementById('cpu-score').innerText = cpuScore;
+                document.getElementById('game-status').innerText = "💀 CPU Menang Ronde Ini!";
+                playTone(200, 'sawtooth', 0.3);
+            }
+
+            // CEK LEVEL UP
+            if (playerScore >= targetScore) {
+                setTimeout(levelUp, 1000);
+            } else {
+                setTimeout(startTimer, 2000);
+            }
+        }
+
+        function levelUp() {
+            currentLevel++;
+            playerScore = 0;
+            cpuScore = 0;
+            targetScore = 3 + currentLevel;
+
+            document.getElementById('level-val').innerText = currentLevel;
+            document.getElementById('player-score').innerText = playerScore;
+            document.getElementById('cpu-score').innerText = cpuScore;
+            document.getElementById('target-score').innerText = targetScore;
+
+            // Rintangan Info
+            let obstacleText = "⚡ Level " + currentLevel + ": ";
+            if(currentLevel === 2) obstacleText += "Kecepatan Timer Bertambah!";
+            else if(currentLevel >= 3) obstacleText += "CPU Mengaktifkan Adaptasi Perisai Pintar!";
+            
+            document.getElementById('obstacle-info').innerText = obstacleText;
+            alert(`🔥 SELAMAT! Kamu naik ke Level ${currentLevel}!`);
+            resetRound();
+        }
+
+        function resetRound() {
+            document.getElementById('player-card').innerText = '✊';
+            document.getElementById('cpu-card').innerText = '❓';
+            document.getElementById('game-status').innerText = "Pilih Senjatamu!";
+            startTimer();
+        }
+
+        // MODAL HANDLERS
+        function openModal() {
+            document.getElementById('helpModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('helpModal').style.display = 'none';
+            startTimer();
+        }
+
+        // INIT GAME
+        updateJoystickSelection();
+        startTimer();
+    </script>
+</body>
+</html>
